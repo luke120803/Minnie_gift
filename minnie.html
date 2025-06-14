@@ -37,9 +37,7 @@
             scroll-snap-type: x mandatory;
         }
 
-        .carousel-slide {
-            scroll-snap-align: start;
-        }
+
 
         .timer-digit {
             background: linear-gradient(135deg, #ff6b81, #ff4757);
@@ -75,13 +73,7 @@
             }
         }
 
-        .floating-heart {
-            position: absolute;
-            animation: float 8s linear forwards;
-            color: rgba(255, 107, 129, 0.6);
-            pointer-events: none;
-            z-index: 0;
-        }
+
 
         /* Pulse animation for timer */
         @keyframes pulse {
@@ -364,7 +356,7 @@
         carousel.innerHTML = '';
 
         // Add items to carousel
-        config.carouselItems.forEach((item, index) => {
+        config.carouselItems.forEach((item, ) => {
             const slide = document.createElement('div');
             slide.className = 'carousel-slide w-full h-full flex flex-col items-center justify-center relative flex-shrink-0';
 
