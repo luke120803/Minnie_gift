@@ -1,0 +1,53 @@
+Atue como: Desenvolvedor Sênior Front-end (React/Vite) e Especialista em UX Mobile.
+
+Objetivo: Converter o site estático atual (Vanilla JS) em uma Web Application Moderna (PWA) usando React, Tailwind CSS e Framer Motion, mantendo o conteúdo original mas elevando a UX para parecer um aplicativo nativo de celular.
+
+Diretrizes de Ativos (Assets Existentes): Você deve mapear e utilizar estritamente os arquivos de mídia já existentes no projeto:
+
+Imagens: assets/images/TianaNavin.jpeg e assets/images/Mickey.jpeg.
+
+Músicas: Use os arquivos em assets/music/ (evangeline.mp3, dueto.mp3, mundo_ideal.mp3, vejo_enfim.mp3).
+
+Vídeos: assets/videos/lukeandminnie.mp4 e assets/videos/minnieandluke.mp4.
+
+Estrutura de Navegação (App Shell):
+
+Implemente uma Bottom Navigation Bar fixa (estilo app mobile) com 4 abas: Início, Playlist, Nossa Lista, Mimos.
+
+O app não deve ter scroll na página inteira, apenas dentro da área de conteúdo de cada aba (overflow-y-auto).
+
+Funcionalidades por Aba:
+
+🏠 Aba Início (Dashboard):
+
+Timer: Refatore a lógica do script.js (cálculo de anos, meses, dias, horas) para um hook React useTimer. Exiba em cards com gradiente (use as cores do style.css original: #ff6b81 a #ff4757).
+
+Galeria: Crie um componente de carrossel moderno para exibir as fotos e vídeos listados acima.
+
+🎵 Aba Playlist (Custom Player):
+
+Crie um player de áudio personalizado (sem usar o player nativo do browser).
+
+Deve conter: Capa do álbum (use a foto do casal), Título da música, Slider de progresso e Controles (Play/Pause/Next/Prev).
+
+Lógica: O áudio deve persistir ou ser fácil de controlar. Carregue o array de músicas baseado no objeto config.playlist do script.js original.
+
+📋 Aba Nossa Lista (Gamificação):
+
+Implemente uma "Tier List" ou quadro Kanban vertical.
+
+Colunas: "Zeramos (Feito)", "DLCs (Em breve)", "Boss Final (Sonhos)".
+
+Use framer-motion ou lógica simples de drag-and-drop para mover itens entre as listas.
+
+💌 Aba Mimos (Gerador):
+
+Botão interativo que exibe frases aleatórias de amor e piadas internas (crie um array de exemplo baseado no tom do texto original do index.html).
+
+Estilo Visual (Design System):
+
+Paleta: Mantenha a identidade visual rosa/romântica. Use classes Tailwind como bg-pink-500, text-pink-600.
+
+Tipografia: Use a fonte 'Dancing Script' para títulos e 'Poppins' para corpo (importar via Google Fonts, conforme o index.html original).
+
+Ícones: Utilize a biblioteca lucide-react.
