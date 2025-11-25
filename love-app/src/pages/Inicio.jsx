@@ -14,6 +14,10 @@ const Inicio = () => {
     const carouselItems = [
         { type: 'image', src: '/assets/images/TianaNavin.jpeg', caption: '😎👑' },
         { type: 'image', src: '/assets/images/Mickey.jpeg', caption: '🍿🍦' },
+        { type: 'image', src: '/assets/images/mybaby.jpeg', caption: '📸😝' },
+        { type: 'image', src: '/assets/images/myhoney.jpeg', caption: '🍿🎥' },
+        { type: 'image', src: '/assets/images/mylove.jpeg', caption: '🐸👑' },
+        { type: 'image', src: '/assets/images/mysunflower.jpeg', caption: '🌻💜' },
         { type: 'video', src: '/assets/videos/lukeandminnie.mp4', caption: '🥰😁' },
         { type: 'video', src: '/assets/videos/minnieandluke.mp4', caption: '😝👻' },
     ];
