@@ -1,59 +1,42 @@
+@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@theme {
+    --color-primary: #ff6b81;
+    --color-secondary: #ff4757;
+    --color-dark: #2f3542;
+    --color-light: #f1f2f6;
+    --font-dancing: "Dancing Script", cursive;
+    --font-poppins: "Poppins", sans-serif;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom, #ff6b81, #ff4757);
-  overflow: hidden;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent; /* Remove flash azul no mobile */
 }
 
-#root {
-  height: 100vh;
-  overflow: hidden;
+/* Container padrão para todas as páginas */
+.page-container {
+    @apply p-4 pb-24 min-h-full flex flex-col space-y-4;
 }
 
-@layer utilities {
-  .heart-bg {
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,30 C40,10 10,15 10,40 C10,65 50,85 50,85 C50,85 90,65 90,40 C90,15 60,10 50,30 Z' fill='%23ff6b8120'/%3E%3C/svg%3E");
-    background-size: 100px;
-    background-repeat: repeat;
-  }
+/* Títulos Responsivos */
+.title-responsive {
+    @apply font-dancing text-3xl sm:text-4xl md:text-5xl text-white drop-shadow-lg text-center;
+}
 
-  .gradient-pink {
-    background: linear-gradient(135deg, #ff6b81, #ff4757);
-  }
-
-  .text-gradient {
-    background: linear-gradient(135deg, #ff6b81, #ff4757);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
+/* Cards com efeito de vidro */
+.glass-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-white/50;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    width: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ff6b81;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #ff4757;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
 }
