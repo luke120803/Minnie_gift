@@ -11,10 +11,10 @@
 }
 
 body {
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
-    overflow: hidden;
-    -webkit-tap-highlight-color: transparent; /* Remove flash azul no mobile */
+    font-family: 'Poppins', sans-serif;
+    background-color: #111827; /* Cor escura de fundo */
+    margin: 0;
+    overflow: hidden; /* Remove scrollbar da janela principal */
 }
 
 /* Container padrão para todas as páginas */

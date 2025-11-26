@@ -1,184 +1,152 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Sparkles, Target, GripVertical } from 'lucide-react';
+import { CheckCircle2, Circle, Trophy, Sparkles, Target } from 'lucide-react';
 
 const NossaLista = () => {
-  const [lists, setLists] = useState({
-    zeramos: [
-      { id: 1, text: 'Primeiro Beijo', emoji: '💋' },
-      { id: 2, text: 'Primeiro Cinema', emoji: '🎬' },
-      { id: 3, text: 'Conhecer a Família', emoji: '👨‍👩‍👧' },
-    ],
-    dlcs: [
-      { id: 4, text: 'Viagem pra Praia', emoji: '🏖️' },
-      { id: 5, text: 'Aniversário Surpresa', emoji: '🎂' },
-      { id: 6, text: 'Jantar Romântico', emoji: '🍽️' },
-    ],
-    boss: [
-      { id: 7, text: 'Casamento', emoji: '💍' },
-      { id: 8, text: 'Casa Própria', emoji: '🏡' },
-      { id: 9, text: 'Viajar pelo Mundo', emoji: '✈️' },
-    ],
-  });
-
-  const [draggedItem, setDraggedItem] = useState(null);
-  const [draggedFrom, setDraggedFrom] = useState(null);
-
-  const columns = [
-    {
-      id: 'zeramos',
-      title: 'Zeramos o Game',
-      icon: Trophy,
-      color: 'from-green-400 to-emerald-500',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-300',
-    },
-    {
-      id: 'dlcs',
-      title: 'DLCs em Breve',
-      icon: Sparkles,
-      color: 'from-blue-400 to-cyan-500',
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-300',
-    },
-    {
-      id: 'boss',
-      title: 'Boss Final',
-      icon: Target,
-      color: 'from-purple-400 to-pink-500',
-      bgColor: 'bg-purple-50',
-      borderColor: 'border-purple-300',
-    },
-  ];
-
-  const handleDragStart = (item, fromColumn) => {
-    setDraggedItem(item);
-    setDraggedFrom(fromColumn);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (toColumn) => {
-    if (!draggedItem || !draggedFrom) return;
-
-    if (draggedFrom === toColumn) {
-      setDraggedItem(null);
-      setDraggedFrom(null);
-      return;
-    }
-
-    setLists((prev) => {
-      const newLists = { ...prev };
-      newLists[draggedFrom] = newLists[draggedFrom].filter((item) => item.id !== draggedItem.id);
-      newLists[toColumn] = [...newLists[toColumn], draggedItem];
-      return newLists;
+    // Adicionei a propriedade 'completed' para controlar o checkbox
+    const [lists, setLists] = useState({
+        zeramos: [
+            { id: 1, text: 'Primeiro Beijo', emoji: '💋', completed: true },
+            { id: 2, text: 'Primeiro Cinema', emoji: '🎬', completed: true },
+            { id: 3, text: 'Conhecer a Família', emoji: '👨‍👩‍👧', completed: true },
+        ],
+        dlcs: [
+            { id: 4, text: 'Viagem pra Praia', emoji: '🏖️', completed: false },
+            { id: 5, text: 'Aniversário Surpresa', emoji: '🎂', completed: false },
+            { id: 6, text: 'Jantar Romântico', emoji: '🍽️', completed: false },
+        ],
+        boss: [
+            { id: 7, text: 'Casamento', emoji: '💍', completed: false },
+            { id: 8, text: 'Casa Própria', emoji: '🏡', completed: false },
+            { id: 9, text: 'Viajar pelo Mundo', emoji: '✈️', completed: false },
+        ],
     });
 
-    setDraggedItem(null);
-    setDraggedFrom(null);
-  };
+    const sections = [
+        {
+            id: 'zeramos',
+            title: 'Zeramos (Já Fizemos)',
+            icon: Trophy,
+            color: 'text-green-500',
+            bg: 'bg-green-50',
+            border: 'border-green-200'
+        },
+        {
+            id: 'dlcs',
+            title: 'DLCs (Em Breve)',
+            icon: Sparkles,
+            color: 'text-blue-500',
+            bg: 'bg-blue-50',
+            border: 'border-blue-200'
+        },
+        {
+            id: 'boss',
+            title: 'Boss Final (Sonhos)',
+            icon: Target,
+            color: 'text-purple-500',
+            bg: 'bg-purple-50',
+            border: 'border-purple-200'
+        },
+    ];
 
-  const handleTouchStart = (item, fromColumn) => {
-    setDraggedItem(item);
-    setDraggedFrom(fromColumn);
-  };
+    // Função para alternar entre feito/não feito
+    const toggleItem = (category, id) => {
+        setLists(prev => ({
+            ...prev,
+            [category]: prev[category].map(item =>
+                item.id === id ? { ...item, completed: !item.completed } : item
+            )
+        }));
+    };
 
-  const handleTouchEnd = (toColumn) => {
-    if (draggedItem && draggedFrom && draggedFrom !== toColumn) {
-      handleDrop(toColumn);
-    } else {
-      setDraggedItem(null);
-      setDraggedFrom(null);
-    }
-  };
+    // Cálculo do progresso total
+    const allItems = [...lists.zeramos, ...lists.dlcs, ...lists.boss];
+    const completedCount = allItems.filter(i => i.completed).length;
+    const totalCount = allItems.length;
+    const progressPercentage = (completedCount / totalCount) * 100;
 
-  return (
-    <div className="h-full overflow-y-auto pb-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="p-6 space-y-6"
-      >
-        <div className="text-center space-y-2">
-          <h1 className="font-dancing text-4xl text-white drop-shadow-lg">
-            Nossa Lista Gamificada
-          </h1>
-          <p className="text-white/90 text-sm">Arraste os cards entre as colunas</p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4">
-          {columns.map((column) => {
-            const Icon = column.icon;
-            return (
-              <motion.div
-                key={column.id}
+    return (
+        <div className="page-container">
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`bg-white/95 backdrop-blur rounded-2xl p-4 shadow-xl border-2 ${column.borderColor}`}
-                onDragOver={handleDragOver}
-                onDrop={() => handleDrop(column.id)}
-                onTouchEnd={() => handleTouchEnd(column.id)}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`p-3 rounded-xl bg-gradient-to-br ${column.color} text-white shadow-lg`}>
-                    <Icon size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-800">{column.title}</h3>
-                    <p className="text-xs text-gray-500">{lists[column.id].length} items</p>
-                  </div>
-                </div>
+                className="space-y-6"
+            >
+                {/* Cabeçalho e Progresso */}
+                <div className="text-center space-y-3">
+                    <h1 className="title-responsive">Nossa Checklist</h1>
+                    <p className="text-white/90 text-xs sm:text-sm">Marcando cada passo da nossa história</p>
 
-                <div className="space-y-2 min-h-[100px]">
-                  {lists[column.id].map((item, index) => (
-                    <motion.div
-                      key={item.id}
-                      layout
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ delay: index * 0.05 }}
-                      draggable
-                      onDragStart={() => handleDragStart(item, column.id)}
-                      onTouchStart={() => handleTouchStart(item, column.id)}
-                      className={`${column.bgColor} p-4 rounded-xl shadow-md cursor-move hover:shadow-lg transition flex items-center gap-3 ${
-                        draggedItem?.id === item.id ? 'opacity-50' : 'opacity-100'
-                      }`}
-                    >
-                      <GripVertical size={20} className="text-gray-400" />
-                      <span className="text-2xl">{item.emoji}</span>
-                      <span className="flex-1 font-medium text-gray-700">{item.text}</span>
-                    </motion.div>
-                  ))}
-                  {lists[column.id].length === 0 && (
-                    <div className="text-center py-8 text-gray-400 text-sm">
-                      Arraste items para cá
+                    {/* Barra de Progresso */}
+                    <div className="glass-card p-4 flex items-center gap-3">
+                        <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <motion.div
+                                className="h-full bg-gradient-to-r from-primary to-secondary"
+                                initial={{ width: 0 }}
+                                animate={{ width: `${progressPercentage}%` }}
+                                transition={{ duration: 1 }}
+                            />
+                        </div>
+                        <span className="text-xs font-bold text-primary whitespace-nowrap">
+              {completedCount} / {totalCount} Conquistas
+            </span>
                     </div>
-                  )}
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="bg-white/95 backdrop-blur rounded-2xl p-6 shadow-xl"
-        >
-          <h3 className="font-dancing text-2xl text-primary text-center mb-3">
-            Dica de Uso
-          </h3>
-          <p className="text-gray-600 text-sm text-center">
-            Segure e arraste os cards entre as colunas para organizar nossas conquistas,
-            planos futuros e sonhos grandes. Cada movimento representa nossa jornada juntos!
-          </p>
-        </motion.div>
-      </motion.div>
-    </div>
-  );
+                {/* Listas por Categoria */}
+                <div className="space-y-4 pb-20">
+                    {sections.map((section) => {
+                        const Icon = section.icon;
+                        return (
+                            <div key={section.id} className={`glass-card p-4 border-l-4 ${section.border}`}>
+                                <div className="flex items-center gap-2 mb-3 border-b border-gray-100 pb-2">
+                                    <Icon size={20} className={section.color} />
+                                    <h3 className="font-bold text-gray-700 text-sm uppercase tracking-wide">
+                                        {section.title}
+                                    </h3>
+                                </div>
+
+                                <div className="space-y-2">
+                                    {lists[section.id].map((item) => (
+                                        <motion.div
+                                            key={item.id}
+                                            whileTap={{ scale: 0.98 }}
+                                            onClick={() => toggleItem(section.id, item.id)}
+                                            className={`
+                        relative p-3 rounded-xl flex items-center gap-3 cursor-pointer transition-all duration-200
+                        ${item.completed ? 'bg-gray-50 opacity-80' : 'bg-white shadow-sm hover:shadow-md'}
+                      `}
+                                        >
+                                            {/* Checkbox Icon */}
+                                            <div className={`
+                        min-w-[24px] h-6 rounded-full flex items-center justify-center transition-colors
+                        ${item.completed ? 'text-green-500' : 'text-gray-300'}
+                      `}>
+                                                {item.completed ? <CheckCircle2 size={24} /> : <Circle size={24} />}
+                                            </div>
+
+                                            {/* Texto e Emoji */}
+                                            <div className="flex-1">
+                        <span className={`text-lg mr-2 ${item.completed ? 'grayscale' : ''}`}>
+                          {item.emoji}
+                        </span>
+                                                <span className={`
+                          text-sm font-medium transition-all
+                          ${item.completed ? 'text-gray-400 line-through' : 'text-gray-700'}
+                        `}>
+                          {item.text}
+                        </span>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </motion.div>
+        </div>
+    );
 };
 
 export default NossaLista;

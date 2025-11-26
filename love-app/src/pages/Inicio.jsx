@@ -5,8 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Inicio = () => {
     const [anniversaryDate] = useState(() => {
-        const saved = localStorage.getItem('anniversaryDate');
-        return saved || new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString();
+        return new Date('2025-05-25T00:00:00').toISOString();
     });
 
     const timeUnits = useTimer(anniversaryDate);
@@ -47,7 +46,7 @@ const Inicio = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-5">
 
                 <div className="text-center mt-2">
-                    <h1 className="title-responsive">Feliz dia dos namorados</h1>
+                    <h1 className="title-responsive">Feliz dia 25 💘</h1>
                     <p className="text-white text-sm sm:text-base drop-shadow opacity-90">minha sunflower 🌻💜</p>
                 </div>
 
@@ -93,12 +92,26 @@ const Inicio = () => {
                     </div>
                 </div>
 
+                {/* Carta com Texto Completo e Corrigido */}
                 <div className="glass-card p-6 text-center">
                     <h3 className="font-dancing text-2xl text-primary mb-4">Para minha Tiana 👑</h3>
-                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed text-justify">
-                        Querida, que essa pequena homenagem lhe faça lembrar o quanto você é especial...
-                        (Seu texto continua aqui)
-                    </p>
+                    <div className="text-gray-700 text-sm leading-relaxed text-justify space-y-4 font-poppins">
+                        <p>
+                            Querida, que essa pequena homenagem lhe faça lembrar o quanto você é especial para mim e o quanto sou feliz por viver bons momentos ao seu lado. Obrigado por me dar a oportunidade de lhe fazer sorrir com as minhas bobagens e poder ver seus olhinhos e seu sorriso incrível e maravilhoso, que apenas você tem. É um brilho que nem consigo explicar.
+                        </p>
+                        <p>
+                            Estar ao seu lado me faz sentir leve e revigorado após uma semana tão intensa e, às vezes, chata. Mas, quando lembro que irei ver você, ou até mesmo quando conversamos, eu lembro de um dos motivos que faz a minha semana cansativa valer a pena.
+                        </p>
+                        <p>
+                            Obrigado por esses 6 meses. Cada momento com você só me faz pensar quais serão os próximos. Eu na verdade não sei como vai ser, porém tenho certeza que vai ser um momento marcante pelo simples fato de você estar comigo.
+                        </p>
+                        <p className="font-bold text-primary text-center mt-4">
+                            Te amo, minha princesa, minha estrelinha, minha sunflower querida, minha Minnie 💜. Beijos.
+                        </p>
+                    </div>
+                    <div className="font-dancing text-2xl text-primary text-center mt-6">
+                        Forever Yours
+                    </div>
                 </div>
             </motion.div>
         </div>

@@ -29,7 +29,8 @@ const Playlist = () => {
                 {/* Capa do Álbum */}
                 <div className="aspect-square w-full max-w-[280px] mx-auto bg-gray-200 rounded-2xl shadow-lg overflow-hidden relative group">
                     <img
-                        src="/assets/images/TianaNavin.jpeg"
+                        // Usa a capa da música atual OU usa a TianaNavin como padrão se não tiver capa
+                        src={currentTrack.cover || "/assets/images/TianaNavin.jpeg"}
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                     />
                 </div>
