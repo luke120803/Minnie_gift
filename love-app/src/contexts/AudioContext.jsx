@@ -43,7 +43,7 @@ const playlist = [
     },
     {
         title: "Yung kai - blue",
-        src: "/assets/music/blue.mp3",
+        src: "/assets/music/yungkai-blue.mp3",
         cover:"/assets/images/blue.png"
     },
 ];
