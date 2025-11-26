@@ -146,13 +146,6 @@ love-app/
 
 ## Paleta de Cores
 
-```css
---primary: #ff6b81    /* Rosa principal */
---secondary: #ff4757  /* Rosa secundário */
---dark: #2f3542       /* Cinza escuro */
---light: #f1f2f6      /* Cinza claro */
-```
-
 ## Tipografia
 
 - **Fonte Display**: Dancing Script (títulos)
