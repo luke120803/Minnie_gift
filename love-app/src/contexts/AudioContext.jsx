@@ -14,37 +14,37 @@ const playlist = [
     {
         title: "Princesa e o Sapo - Evangeline",
         src: "/assets/music/evangeline.mp3",
-        cover: "/assets/images/princesa_sapo.png"
+        cover: "/assets/images/princesa_sapo.jpg"
     },
     {
         title: "Noiva Cadáver - Dueto",
         src: "/assets/music/dueto.mp3",
-        cover: "/assets/images/noiva_cadaver.png"
+        cover: "/assets/images/noiva_cadaver.jpg"
     },
     {
         title: "Aladdin - Mundo Ideal",
         src: "/assets/music/mundo_ideal.mp3",
-        cover: "/assets/images/aladdin.png"
+        cover: "/assets/images/aladdin.jpg"
     },
     {
         title: "Enrolados - Vejo enfim a luz brilhar",
         src: "/assets/music/vejo_enfim.mp3",
-        cover: "/assets/images/enrolados.png"
+        cover: "/assets/images/enrolados.jpg"
     },
     {
         title: "Lilo Stich - Burning love",
         src: "/assets/music/lilo_stich.mp3",
-        cover: "/assets/images/lilo_stich.png"
+        cover: "/assets/images/lilo_stich.jpg"
     },
     {
         title: "Homem Aranha - Sunflower",
         src: "/assets/music/sunflower.mp3",
-        cover:"/assets/images/miranha.png"
+        cover:"/assets/images/miranha.jpg"
     },
     {
         title: "Yung kai - blue",
         src: "/assets/music/yungkai-blue.mp3",
-        cover:"/assets/images/blue.png"
+        cover:"/assets/images/blue.jpg"
     },
 ];
 

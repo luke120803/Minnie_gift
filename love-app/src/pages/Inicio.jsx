@@ -11,12 +11,12 @@ const Inicio = () => {
     const timeUnits = useTimer(anniversaryDate);
 
     const carouselItems = [
-        { type: 'image', src: '/assets/images/TianaNavin.jpeg', caption: '😎👑' },
-        { type: 'image', src: '/assets/images/Mickey.jpeg', caption: '🍿🍦' },
-        { type: 'image', src: '/assets/images/mybaby.jpeg', caption: '📸😝' },
-        { type: 'image', src: '/assets/images/myhoney.jpeg', caption: '🍿🎥' },
-        { type: 'image', src: '/assets/images/mylove.jpeg', caption: '🐸👑' },
-        { type: 'image', src: '/assets/images/mysunflower.jpeg', caption: '🌻💜' },
+        { type: 'image', src: '/assets/images/TianaNavin.jpg', caption: '😎👑' },
+        { type: 'image', src: '/assets/images/Mickey.jpg', caption: '🍿🍦' },
+        { type: 'image', src: '/assets/images/mybaby.jpg', caption: '📸😝' },
+        { type: 'image', src: '/assets/images/myhoney.jpg', caption: '🍿🎥' },
+        { type: 'image', src: '/assets/images/mylove.jpg', caption: '🐸👑' },
+        { type: 'image', src: '/assets/images/mysunflower.jpg', caption: '🌻💜' },
         { type: 'video', src: '/assets/videos/lukeandminnie.mp4', caption: '🥰😁' },
         { type: 'video', src: '/assets/videos/minnieandluke.mp4', caption: '😝👻' },
     ];
