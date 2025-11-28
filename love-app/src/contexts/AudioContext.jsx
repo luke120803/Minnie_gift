@@ -1,7 +1,8 @@
-import {createContext, useContext, useState, useRef, useEffect} from 'react';
+import {createContext, useContext, useState, useRef, useEffect, useCallback} from 'react';
 
 const AudioContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAudio = () => {
     const context = useContext(AudioContext);
     if (!context) {
@@ -56,17 +57,60 @@ export const AudioProvider = ({children}) => {
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(0.7);
 
+    // FUNÇÕES DE CONTROLE (Movidas para cima e com useCallback)
+
+    const play = useCallback(() => {
+        audioRef.current.play()
+            .then(() => setIsPlaying(true))
+            .catch(console.error);
+    }, []);
+
+    const pause = useCallback(() => {
+        audioRef.current.pause();
+        setIsPlaying(false);
+    }, []);
+
+    const togglePlay = useCallback(() => {
+        if (isPlaying) {
+            pause();
+        } else {
+            play();
+        }
+    }, [isPlaying, pause, play]);
+
+    const playNext = useCallback(() => {
+        setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+    }, []);
+
+    const playPrevious = useCallback(() => {
+        setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    }, []);
+
+    const seek = useCallback((time) => {
+        audioRef.current.currentTime = time;
+        setCurrentTime(time);
+    }, []);
+
+    const changeVolume = useCallback((newVolume) => {
+        audioRef.current.volume = newVolume;
+        setVolume(newVolume);
+    }, []);
+
+    // EFEITOS
+
+    // 1. Configurar listeners de evento (depende de playNext)
     useEffect(() => {
         const audio = audioRef.current;
 
         const updateTime = () => setCurrentTime(audio.currentTime);
         const updateDuration = () => setDuration(audio.duration);
-        const handleEnded = () => playNext();
+        const handleEnded = () => playNext(); // Agora playNext já existe!
 
         audio.addEventListener('timeupdate', updateTime);
         audio.addEventListener('loadedmetadata', updateDuration);
         audio.addEventListener('ended', handleEnded);
 
+        // Atualiza volume inicial
         audio.volume = volume;
 
         return () => {
@@ -74,8 +118,14 @@ export const AudioProvider = ({children}) => {
             audio.removeEventListener('loadedmetadata', updateDuration);
             audio.removeEventListener('ended', handleEnded);
         };
-    }, []);
+    }, [playNext]); // playNext é dependência
 
+    // 2. Atualizar volume quando mudar
+    useEffect(() => {
+        audioRef.current.volume = volume;
+    }, [volume]);
+
+    // 3. Tocar nova música quando o índice mudar
     useEffect(() => {
         const audio = audioRef.current;
         audio.src = playlist[currentTrackIndex].src;
@@ -83,44 +133,7 @@ export const AudioProvider = ({children}) => {
         if (isPlaying) {
             audio.play().catch(console.error);
         }
-    }, [currentTrackIndex]);
-
-    const play = () => {
-        audioRef.current.play()
-            .then(() => setIsPlaying(true))
-            .catch(console.error);
-    };
-
-    const pause = () => {
-        audioRef.current.pause();
-        setIsPlaying(false);
-    };
-
-    const togglePlay = () => {
-        if (isPlaying) {
-            pause();
-        } else {
-            play();
-        }
-    };
-
-    const playNext = () => {
-        setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
-    };
-
-    const playPrevious = () => {
-        setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
-    };
-
-    const seek = (time) => {
-        audioRef.current.currentTime = time;
-        setCurrentTime(time);
-    };
-
-    const changeVolume = (newVolume) => {
-        audioRef.current.volume = newVolume;
-        setVolume(newVolume);
-    };
+    }, [currentTrackIndex]); // Removi isPlaying das dependências para evitar loops
 
     const currentTrack = playlist[currentTrackIndex];
 

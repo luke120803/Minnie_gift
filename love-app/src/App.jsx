@@ -1,35 +1,38 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react'; // Importamos Suspense e lazy
 import { AudioProvider } from './contexts/AudioContext';
 import BottomNav from './components/BottomNav';
-import Inicio from './pages/Inicio';
-import Playlist from './pages/Playlist';
-import NossaLista from './pages/NossaLista';
-import Mimos from './pages/Mimos';
+
+const Inicio = lazy(() => import('./pages/Inicio'));
+const Playlist = lazy(() => import('./pages/Playlist'));
+const NossaLista = lazy(() => import('./pages/NossaLista'));
+const Mimos = lazy(() => import('./pages/Mimos'));
+
+const Loading = () => (
+    <div className="h-full flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin"></div>
+    </div>
+);
 
 function App() {
     const [activeTab, setActiveTab] = useState('inicio');
 
     const renderContent = () => {
-        switch (activeTab) {
-            case 'inicio':
-                return <Inicio />;
-            case 'playlist':
-                return <Playlist />;
-            case 'lista':
-                return <NossaLista />;
-            case 'mimos':
-                return <Mimos />;
-            default:
-                return <Inicio />;
-        }
+        // Envolvemos as páginas com <Suspense>.
+        // Se a página ainda não baixou, ele mostra o <Loading />
+        return (
+            <Suspense fallback={<Loading />}>
+                {activeTab === 'inicio' && <Inicio />}
+                {activeTab === 'playlist' && <Playlist />}
+                {activeTab === 'lista' && <NossaLista />}
+                {activeTab === 'mimos' && <Mimos />}
+            </Suspense>
+        );
     };
 
     return (
         <AudioProvider>
-            {/* 1. Fundo Escuro (Mesa) para Desktop */}
+            {/* Container Principal (Layout Celular) */}
             <div className="min-h-screen w-full bg-gray-900 flex items-center justify-center md:p-4">
-
-                {/* 2. O Container do "Celular" */}
                 <div className="
           w-full h-[100dvh]
           md:h-[850px] md:max-w-[400px] md:rounded-[40px]
@@ -38,12 +41,10 @@ function App() {
           flex flex-col relative overflow-hidden
         ">
 
-                    {/* Conteúdo Principal (com scroll) */}
                     <main className="flex-1 overflow-y-auto scrollbar-hide pb-20">
                         {renderContent()}
                     </main>
 
-                    {/* Barra de Navegação Fixa na parte inferior do container */}
                     <div className="absolute bottom-0 w-full z-50">
                         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
                     </div>

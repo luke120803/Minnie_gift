@@ -1,11 +1,20 @@
 import { motion } from 'framer-motion';
-import { Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import { Pause, Play, SkipBack, SkipForward } from 'lucide-react';
 import { useAudio } from '../contexts/AudioContext';
 
 const Playlist = () => {
+    // CORREÇÃO 1: Removi 'volume' e 'changeVolume' que não estavam sendo usados
     const {
-        currentTrack, currentTrackIndex, isPlaying, currentTime, duration,
-        volume, playlist, togglePlay, playNext, playPrevious, seek, changeVolume,
+        currentTrack,
+        currentTrackIndex,
+        isPlaying,
+        currentTime,
+        duration,
+        playlist,
+        togglePlay,
+        playNext,
+        playPrevious,
+        seek
     } = useAudio();
 
     const formatTime = (time) => {
@@ -31,6 +40,8 @@ const Playlist = () => {
                     <img
                         // Usa a capa da música atual OU usa a TianaNavin como padrão se não tiver capa
                         src={currentTrack.cover || "/assets/images/TianaNavin.jpeg"}
+                        // CORREÇÃO 2: Adicionei o atributo ALT para acessibilidade
+                        alt={`Capa do álbum ${currentTrack.title}`}
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                     />
                 </div>
@@ -48,7 +59,8 @@ const Playlist = () => {
                         seek(((e.clientX - rect.left) / rect.width) * duration);
                     }}>
                         <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden cursor-pointer">
-                            <div className="h-full bg-primary w-0 transition-all duration-100" style={{ width: `${(currentTime / duration) * 100}%` }} />
+                            <div className="h-full bg-primary w-0 transition-all duration-100"
+                                 style={{ width: `${(currentTime / duration) * 100}%` }} />
                         </div>
                         <div className="flex justify-between text-[10px] text-gray-400 font-medium">
                             <span>{formatTime(currentTime)}</span>
@@ -58,16 +70,34 @@ const Playlist = () => {
 
                     {/* Botões de Controle */}
                     <div className="flex items-center justify-center gap-6">
-                        <button onClick={playPrevious} className="text-gray-400 hover:text-primary transition"><SkipBack size={28} /></button>
-                        <button onClick={togglePlay} className="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-pink-200 hover:scale-105 transition active:scale-95">
-                            {isPlaying ? <Pause size={28} fill="currentColor" /> : <Play size={28} fill="currentColor" className="ml-1" />}
+                        <button
+                            onClick={playPrevious}
+                            className="text-gray-400 hover:text-primary transition"
+                            aria-label="Música Anterior"
+                        >
+                            <SkipBack size={28}/>
                         </button>
-                        <button onClick={playNext} className="text-gray-400 hover:text-primary transition"><SkipForward size={28} /></button>
+
+                        <button
+                            onClick={togglePlay}
+                            className="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-pink-200 hover:scale-105 transition active:scale-95"
+                            aria-label={isPlaying ? "Pausar" : "Tocar"}
+                        >
+                            {isPlaying ? <Pause size={28} fill="currentColor"/> : <Play size={28} fill="currentColor" className="ml-1"/>}
+                        </button>
+
+                        <button
+                            onClick={playNext}
+                            className="text-gray-400 hover:text-primary transition"
+                            aria-label="Próxima Música"
+                        >
+                            <SkipForward size={28}/>
+                        </button>
                     </div>
                 </div>
             </motion.div>
 
-            {/* Lista Curta (Opcional, se couber na tela) */}
+            {/* Lista Curta */}
             <div className="glass-card p-3">
                 <div className="space-y-1 max-h-32 overflow-y-auto">
                     {playlist.map((track, i) => (
@@ -75,7 +105,8 @@ const Playlist = () => {
                              className={`p-2 rounded-lg flex items-center gap-3 text-xs cursor-pointer ${i === currentTrackIndex ? 'bg-pink-50 text-primary font-bold' : 'text-gray-600 hover:bg-gray-50'}`}>
                             <span className="w-4 text-center">{i + 1}</span>
                             <span className="truncate flex-1">{track.title}</span>
-                            {i === currentTrackIndex && <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"/>}
+                            {i === currentTrackIndex &&
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"/>}
                         </div>
                     ))}
                 </div>
